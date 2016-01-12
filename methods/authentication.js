@@ -14,12 +14,13 @@ exports.authenticate = function(rawCookie) {
 				})
 				if((sessionIdArray).indexOf(cookie) > -1) {
 					console.log('session id exists; can log in');
-					result = true;
+					return true;
 				} else {
 					console.log('session id does not exist; hacker alert')
-					result = false;
+					return false;
 				}
 			})
+			console.log(result);
 			return result //this returns undefined
 	} else {
 		return false

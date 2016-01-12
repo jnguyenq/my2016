@@ -11,6 +11,7 @@ module.exports = function (req, res) {
 	
 	var rawCookie = req.headers.cookie;
 	var result = authentication.authenticate(rawCookie)
+	console.log('result: ' + result);
 
 	if(result === true) {
 		console.log('actually loggedin');
