@@ -5,6 +5,7 @@ var routes = require('./routes/routes');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
+var promise = require('bluebird');
 
 app.use(express.static(__dirname + "/views"));
 app.use(express.static(__dirname + "/public"));

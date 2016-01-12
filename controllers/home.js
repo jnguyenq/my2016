@@ -10,8 +10,11 @@ var authentication = require('../methods/authentication.js');
 module.exports = function (req, res) {
 	
 	var rawCookie = req.headers.cookie;
-	var result = authentication.authenticate()
-	console.log('result: ' + result);
+	authentication.authenticate().then(function(result) {
+		console.log(result);
+		return result;
+	});
+	console.log('result: ' + result)
 
 	if(result === true) {
 		console.log('actually loggedin');
