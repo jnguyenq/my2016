@@ -11,18 +11,17 @@ module.exports = function (req, res) {
 	
 	var rawCookie = req.headers.cookie;
 	authentication.authenticate().then(function(result) {
-		console.log(result);
+		console.log('result is: ' + result);
 		return result;
 	});
-	console.log('result: ' + result)
 
-	if(result === true) {
-		console.log('actually loggedin');
-		res.render('home.html');
-	} else {
-		console.log('nah');
-		res.redirect('/login');
-	}
+	// if(result === true) {
+	// 	console.log('actually loggedin');
+	// 	res.render('home.html');
+	// } else {
+	// 	console.log('nah');
+	// 	res.redirect('/login');
+	// }
 
 };
 
