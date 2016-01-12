@@ -26,4 +26,4 @@ exports.authenticate = function(rawCookie) {
 		return false
 		console.log('no cookie');
 	}
-}
+};
