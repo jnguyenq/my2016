@@ -7,32 +7,24 @@ var cookieParser = require('cookie-parser');
 var knex = require('../models/database').knex;
 var authentication = require('../methods/authentication.js');
 var Promise = require('bluebird');
+var parseCookie = require('../methods/cookie-parse.js');
 
 module.exports = function (req, res) {
 	
 
-	// var result1 = Promise.method(authentication.authenticate(rawCookie).then(function(result) {
-	// 	//console.log(result);
-	// 	return result;
-	// }));
-
 	var rawCookie = req.headers.cookie;
+	var cookie = parseCookie.parseCookie(rawCookie);
 
-
-	var result1 = Promise.method(function(rawCookie) {
-		return authentication.authenticate(rawCookie).then(function(result) {
-			return result;
+	authentication.ajhuthenticate(cookie)
+		.then(function(result) {
+			console.log(result);
+		})
+		.catch(function(err) {
+			console.log('error!!', err);
 		});
-	});
 
-	console.log(result1);
-	// if(result === true) {
-	// 	console.log('actually loggedin');
-	// 	res.render('home.html');
-	// } else {
-	// 	console.log('nah');
-	// 	res.redirect('/login');
-	// }
+
+
+
 
 };
-
