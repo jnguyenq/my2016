@@ -8,23 +8,24 @@ var knex = require('../models/database').knex;
 var authentication = require('../methods/authentication.js');
 var Promise = require('bluebird');
 var parseCookie = require('../methods/cookie-parse.js');
+// var Promise = require('promise');
 
 module.exports = function (req, res) {
-	
 
 	var rawCookie = req.headers.cookie;
 	var cookie = parseCookie.parseCookie(rawCookie);
 
-	authentication.ajhuthenticate(cookie)
-		.then(function(result) {
-			console.log(result);
-		})
-		.catch(function(err) {
-			console.log('error!!', err);
-		});
-
-
-
-
+	authentication.authenticate(cookie, function(result, err) {
+		if(err) {
+			console.log(err)
+		} else {
+			if(result.length > 0) {
+				res.render('home.html')
+			} else {
+				res.redirect('login.html');
+			}
+		}
+	
+	});
 
 };
