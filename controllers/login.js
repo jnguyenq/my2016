@@ -11,5 +11,5 @@ app.use(cookieParser());
 module.exports = function (req, res) {
 	
 	res.render('login.html')
-
+	
 };
