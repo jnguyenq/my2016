@@ -6,9 +6,13 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var cookieSession = require('cookie-session');
 var promise = require('bluebird');
+var myMiddleware = require('./methods/middleware.js');
 
 app.use(express.static(__dirname + "/views"));
 app.use(express.static(__dirname + "/public"));
+
+//Custom middlware
+
 
 //Body parser
 app.use(bodyParser.json());
@@ -17,6 +21,13 @@ app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'ejs');
 
 //Routes
+app.use(function (req, res, next) {
+  if (req.path === "/" || req.path === "/login") {
+      next();
+  } else {
+      middleware.authenticate(req, res, next);
+  }
+});
 app.use(routes);
 
 //Cookies

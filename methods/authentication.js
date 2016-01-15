@@ -1,13 +1,16 @@
-
 var knex = require('../models/database').knex;
 var parseCookie = require('./cookie-parse.js');
-var Promise = require('bluebird');
+var user = require('./returnUser.js');
 
-exports.authenticate = function(cookie, callback) {
-	
-	return knex('users')
-		.where('session_key', cookie)
-		.then(function(data) {
-			callback(data);
+module.exports = {
+	authenticate: function(req, res, next) {
+		var cookie = parseCookie.parseCookie(req.headers.cookie);
+		user.returnUser(cookie, function(result) {
+			if(result.length > 0) {
+				next();
+			} else {
+				res.redirect('/login');
+			}
 		});
+	}
 };

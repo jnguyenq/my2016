@@ -7,26 +7,17 @@ var cookieParser = require('cookie-parser');
 var knex = require('../models/database').knex;
 var authentication = require('../methods/authentication.js');
 var parseCookie = require('../methods/cookie-parse.js');
+var myMiddleware = require('../methods/middleware.js');
+var user = require('../methods/returnUser.js');
 
 
 module.exports = function (req, res) {
 
+	var cookie = parseCookie.parseCookie(req.headers.cookie);
 
-	var rawCookie = req.headers.cookie;
-	var cookie = parseCookie.parseCookie(rawCookie);
-
-
-	authentication.authenticate(cookie, function(result, err) {
-		if(err) {
-			console.log(err)
-		} else {
-			if(result.length > 0) {
-				res.render('home.html')
-			} else {
-				res.redirect('login.html');
-			}
-		}
-	
+	user.returnUser(cookie, function(result) {
+		
+		res.render('../views/home');
 	});
 
 };
